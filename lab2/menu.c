@@ -5,8 +5,8 @@
 
 typedef struct
 {
-	char name[128];
-	void (*f)();
+    char name[128];
+    void (*f)();
 } Cmd;
 
 void hello();
@@ -20,20 +20,20 @@ void changedir();
 void quit();
 
 Cmd cmd[] = {
-	            {"hello", hello},
-	            {"help", help},
-	            {"ls", list},
-	            {"del", delete},
-	            {"run", run},
-	            {"echo", echo},
-	            {"new", new},
-	            {"cd", changedir},
+	        {"hello", hello},
+	        {"help", help},
+	        {"ls", list},
+	        {"del", delete},
+	        {"run", run},
+	        {"echo", echo},
+	        {"new", new},
+	        {"cd", changedir},
                 {"quit", quit}
             };
 
-int main(int argc, char const *argv[])
+int main()
 {
-	int i;    
+    int i;    
     char input[128] = "";
 
     hello();
@@ -54,7 +54,7 @@ int main(int argc, char const *argv[])
              	cnt ++;
              	if(cnt == sizeof(cmd)/sizeof(cmd[0]))
              	{
-             		printf("wrong cmd\n");
+             	    printf("wrong cmd\n");
              	}
              }
     	}
@@ -64,54 +64,54 @@ int main(int argc, char const *argv[])
 
 void hello()
 {
-	printf("Hello, Welcome to menu\n");
+    printf("Hello, Welcome to menu\n");
     printf("gitDongHub@copyright at 2017/09/24\n");
     printf("if you need help, please type help\n");
 }
 
 void help()
 {
-	int i;
-	printf("List all the cmd:\n");
+    int i;
+    printf("List all the cmd:\n");
     for(i = 0; i < sizeof(cmd)/sizeof(cmd[0]); i++)
     {
     	printf("%s\t", cmd[i].name);
     	if(i == 4)
     	{
-    		printf("\n");
+    	    printf("\n");
     	}
     }
     printf("\n");
 }
 void list()
 {
-	printf("this is the list cmd\n");
+    printf("this is the list cmd\n");
 }
 
 void delete()
-{
-	printf("this is the delete cmd\n");
+{ 
+    printf("this is the delete cmd\n");
 }
 
 void run()
 {
-	printf("this is the run cmd\n");
+    printf("this is the run cmd\n");
 }
 void echo()
 {
-	printf("this is the echo cmd\n");
+    printf("this is the echo cmd\n");
 }
 
 void new()
 {
-	printf("this is the new cmd\n");
+    printf("this is the new cmd\n");
 }
 void changedir()
 {
-	printf("this is the cd cmd\n");
+    printf("this is the cd cmd\n");
 }
 
 void quit()
 {
-	exit(0);
+    exit(0);
 }
