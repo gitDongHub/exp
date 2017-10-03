@@ -65,7 +65,7 @@ void showAllCmd(tLinkTable* head)
 {
     tDataNode* pNode = (tDataNode*)GetLinkTableHead(head);
     int cnt = 0;
-    pirntf("  Command\t\tDescription\n");
+    printf("  Command\t\tDescription\n");
     while(pNode != NULL)
     {
          cnt++;
@@ -76,7 +76,7 @@ void showAllCmd(tLinkTable* head)
 }
 
 /*initalize the data of head*/
-InitMenuData(tLinkTable** ppLinkTable)
+int InitMenuData(tLinkTable** ppLinkTable)
 {
     *ppLinkTable = CreateLinkTable();
     tDataNode* pNode = (tDataNode*)malloc(sizeof(tDataNode));
@@ -88,13 +88,13 @@ InitMenuData(tLinkTable** ppLinkTable)
     pNode = (tDataNode*)malloc(sizeof(tDataNode));
     pNode->cmd = "help";
     pNode->desc = "show the version of menu";
-    pNode->handler = version;
+    pNode->handler = help;
     AddLinkTableNode(*ppLinkTable, (tLinkTableNode*)pNode);
 
     pNode = (tDataNode*)malloc(sizeof(tDataNode));
     pNode->cmd = "pwd";
     pNode->desc = "print the working direct";
-    pNode->handler = ;
+    pNode->handler = printWorkDir;
     AddLinkTableNode(*ppLinkTable, (tLinkTableNode*)pNode);
 
     pNode = (tDataNode*)malloc(sizeof(tDataNode));
@@ -126,6 +126,8 @@ InitMenuData(tLinkTable** ppLinkTable)
     pNode->desc = "exit from the menu program";
     pNode->handler = quit;
     AddLinkTableNode(*ppLinkTable, (tLinkTableNode*)pNode);
+
+    return 0;
 }
 
 tLinkTable* head = NULL;
@@ -163,7 +165,6 @@ void version()
 
 void help()
 {
-    int i;
     printf("**************************help****************************\n");
     printf("List all the cmd of menu program:\n");
     showAllCmd(head);
@@ -171,9 +172,7 @@ void help()
 }
 void printWorkDir()
 {
-    char buf[256];
-    getcwd(buf, sizeof(buf));
-    printf("the current dir: %s\n", buf);
+    system("pwd");
 }
 
 void printSystemTime()
