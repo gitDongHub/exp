@@ -1,7 +1,29 @@
-//menu.c
+/******************************************************************/
+/* Copyright (C) gitDongHub@github.com, 2017-2018                 */
+/*                                                                */
+/* File name                  : menu.c                            */
+/* Principal author           : gitDongHub                        */
+/* Subsystem name             : menu                              */
+/* Module name                : menu                              */
+/* Language                   : C                                 */
+/* Target environment         : ANY                               */
+/* Date of first release      : 2017/09/24                        */
+/* Deacription                : This is a menu program            */
+/******************************************************************/
+
+/*
+ * Revision log:
+ *
+ * created by dong, 2017/09/24
+ * 
+ */
+
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
+#include <unistd.h>
 
 typedef struct
 {
@@ -11,7 +33,8 @@ typedef struct
 
 void hello();
 void help();
-void list();
+void pwd();
+void printSystemTime();
 void delete();
 void run();
 void echo();
@@ -22,8 +45,9 @@ void quit();
 Cmd cmd[] = {
 	        {"hello", hello},
 	        {"help", help},
-	        {"ls", list},
-	        {"del", delete},
+	        {"pwd", pwd},
+	        {"time", printSystemTime},
+                {"del", delete},
 	        {"run", run},
 	        {"echo", echo},
 	        {"new", new},
@@ -64,9 +88,9 @@ int main()
 
 void hello()
 {
-    printf("Hello, Welcome to menu\n");
+    printf("gitDongHub menu [version 1.0]\n");
     printf("gitDongHub@copyright at 2017/09/24\n");
-    printf("if you need help, please type help\n");
+    printf("If you need help, please type help\n");
 }
 
 void help()
@@ -83,9 +107,21 @@ void help()
     }
     printf("\n");
 }
-void list()
+void pwd()
 {
-    printf("this is the list cmd\n");
+    char buf[256];
+    getcwd(buf, sizeof(buf));
+    printf("the current dir: %s\n", buf);
+}
+
+void printSystemTime()
+{
+    struct tm* ptr;
+    time_t it;
+    it = time(NULL);
+    ptr = localtime(&it);
+    printf("%4d-%02d-%02d  %d:%d:%d\n", ptr->tm_year+1900, ptr->tm_mon+1, ptr->tm_mday,
+                                        ptr->tm_hour, ptr->tm_min, ptr->tm_sec);
 }
 
 void delete()
