@@ -1,9 +1,9 @@
 /*****************************************************************************/
 *	Name: LinkTable.h
-*	Copyright: 
-*	Author: hjzdx
-*	Date: 18/09/17 10:04
-*	Description: 可重用链表模块 
+*	Copyright: 2017-2021
+*	Author: gitDongHub
+*	Date: 2017/10/03
+*	Description: the header file of LintkTable
 /*****************************************************************************/
 
 #ifndef _LINK_TABLE_H_
