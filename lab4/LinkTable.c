@@ -1,10 +1,10 @@
-/*****************************************************************************/
-*	Name: LinkTable.c
-*	Copyright: 2017-2021
-*	Author: gitDongHub
-*	Date: 2017/10/03 
-*	Description: source files Link Table /
-/*****************************************************************************/
+/******************************************************************************/
+/*	Name: LinkTable.c                                                         */
+/*	Copyright: 2017-2021                                                      */
+/*	Author: gitDongHub                                                        */
+/*	Date: 2017/10/03                                                          */
+/*	Description: source files Link Table                                      */
+/******************************************************************************/
 
 #include "LinkTable.h"
 tLinkTable * CreateLinkTable()

@@ -1,9 +1,9 @@
 /*****************************************************************************/
-*	Name: LinkTable.h
-*	Copyright: 2017-2021
-*	Author: gitDongHub
-*	Date: 2017/10/03
-*	Description: the header file of LintkTable
+/*	Name: LinkTable.h                                                        */
+/*	Copyright: 2017-2021                                                     */
+/*	Author: gitDongHub                                                       */
+/*	Date: 2017/10/03                                                         */
+/*	Description: the header file of LintkTable                               */
 /*****************************************************************************/
 
 #ifndef _LINK_TABLE_H_
