@@ -21,8 +21,10 @@
 
 
 #include <stdio.h>
+#include <string.h>
 #include <stdlib.h>
 #include "linktable.h"
+#include "menu.h"
 
 #define CMD_MAX_LEN 128
 #define DESC_LEN    1024
@@ -41,7 +43,7 @@ typedef struct DataNode
 
 tLinkTable * head = NULL;
 
-static int SearchCondition(tLinkTableNode * pLinkTableNode, void* args)
+int SearchCondition(tLinkTableNode * pLinkTableNode, void* args)
 {
     tDataNode * pNode = (tDataNode *)pLinkTableNode;
     char* cmd = (char*)args;
@@ -53,13 +55,13 @@ static int SearchCondition(tLinkTableNode * pLinkTableNode, void* args)
 }
 
 /* find a cmd in the linklist and return the datanode pointer */
-static tDataNode* FindCmd(tLinkTable * head, char * cmd)
+tDataNode* FindCmd(tLinkTable * head, char * cmd)
 {
     return  (tDataNode*)SearchLinkTableNode(head,SearchCondition,(void*)cmd);
 }
 
 /* show all cmd in listlist */
-static int ShowAllCmd(tLinkTable * head)
+int ShowAllCmd(tLinkTable * head)
 {
     tDataNode * pNode = (tDataNode*)GetLinkTableHead(head);
     while(pNode != NULL)
@@ -70,7 +72,7 @@ static int ShowAllCmd(tLinkTable * head)
     return 0;
 }
 
-static int help()
+int help()
 {
     ShowAllCmd(head);
     return 0; 
@@ -78,7 +80,6 @@ static int help()
 
 int MenuConfig(char* cmd, char* desc, int (*handler)())
 {
-    pNode = NULL;
     if(head == NULL)
     {
         head = CreateLinkTable();
@@ -88,7 +89,7 @@ int MenuConfig(char* cmd, char* desc, int (*handler)())
         pNode->handler = help;
         AddLinkTableNode(head, (tLinkTableNode *)pNode);
     }
-    pNode = (tDataNode*)malloc(sizeof(tDataNode));
+    tDataNode* pNode = (tDataNode*)malloc(sizeof(tDataNode));
     pNode->cmd = cmd;
     pNode->desc = desc;
     pNode->handler = handler; 
