@@ -38,7 +38,7 @@ typedef struct DataNode
     tLinkTableNode * pNext;
     char*   cmd;
     char*   desc;
-    int     (*handler)();
+    int     (*handler)(int agrc, char* agrv[]);
 } tDataNode;
 
 tLinkTable * head = NULL;
@@ -76,11 +76,11 @@ int help()
 {
     printf("**************************help****************************\n");
     printf("List all the cmd of menu program:\n");
-    showAllCmd(head);
+    ShowAllCmd(head);
     printf("**************************end*****************************\n");
 }
 
-int MenuConfig(char* cmd, char* desc, int (*handler)())
+int MenuConfig(char* cmd, char* desc, int (*handler)(int agrc, char* agrv[]))
 {
     if(head == NULL)
     {
@@ -110,9 +110,32 @@ int ExecuteMenu()
     printf("If you need help, please type help\n");
     while(1)
     {
+	int agrc = 0;
+	char* agrv[CMD_MAX_LEN];
+	char* cmd = NULL;
+
     	printf("cmd>>");
-    	scanf("%s", input);
-    	tDataNode* p = findCmd(head, input);
+    	cmd = fgets(input, CMD_MAX_LEN, stdin);
+	
+	if(cmd == NULL)
+	{
+	    continue;
+	}
+
+	/*converts cmd to agrc and agrv*/
+	cmd = strtok(cmd, " ");
+	while(cmd != NULL && agrc < CMD_MAX_LEN)
+	{
+	    agrv[agrc] = cmd;
+	    agrc ++;
+            cmd = strtok(NULL, " ");
+	}
+	if(agrc ==  1)
+	{
+	    int len = strlen(agrv[0]);
+	    *(agrv[0] + (len - 1)) = '\0';
+	} 
+    	tDataNode* p = FindCmd(head, agrv[0]);
         if(p == NULL)
         {
             printf("the cmd you input isn't exist\n");
@@ -120,8 +143,9 @@ int ExecuteMenu()
         }
         if(p->handler != NULL)
         {
-            p->handler();
-        }   
+            p->handler(agrc, agrv);
+        }
+	   
     }
     return 0;
 }

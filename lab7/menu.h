@@ -24,7 +24,7 @@
 #define __MENU_H__
 
 /*Config the Menu Engine*/
-int MenuConfig(char* cmd, char* desc, int (*handler)());
+int MenuConfig(char* cmd, char* desc, int (*handler)(int argc, char* argv[]));
 
 /*Execute the menu*/
 int ExecuteMenu();
