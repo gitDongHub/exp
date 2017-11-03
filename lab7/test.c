@@ -4,12 +4,12 @@
 #include "linktable.h"
 
 int quit();
-int changeDir(int argc, char* argv[]);
+int echo(int argc, char* argv[]);
 
 int main(int argc, char* argv)
 {
     MenuConfig("quit","quit from the menu program", quit);
-    MenuConfig("cd","list the current files or the directory you want", changeDir);
+    MenuConfig("echo","printf all you input in the terminal", echo);
     ExecuteMenu();
 
     return 0;
@@ -22,8 +22,20 @@ int quit()
     return 0;
 }
 
-int changeDir(int argc, char* argv[])
+int echo(int argc, char* argv[])
 {
-    system("ls %s", argv);
+    int i;
+    if(argc == 1)
+    {
+        printf("echo on\n");
+    }
+    
+    for(i = 1;i < argc;i ++)
+    {
+        printf("%d:%s\n",i, argv[i]);
+    }
     return 0;
 }
+
+
+
