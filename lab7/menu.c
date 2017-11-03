@@ -1,14 +1,14 @@
 
 /**************************************************************************************************/
-/* Copyright (C) mc2lab.com, SSE@USTC, 2014-2015                                                  */
+/* Copyright (C) github.com, gitDongHub@Dong, 2017-2018                                           */
 /*                                                                                                */
 /*  FILE NAME             :  menu.c                                                               */
-/*  PRINCIPAL AUTHOR      :  Mengning                                                             */
+/*  PRINCIPAL AUTHOR      :  gitDongHub                                                           */
 /*  SUBSYSTEM NAME        :  menu                                                                 */
 /*  MODULE NAME           :  menu                                                                 */
 /*  LANGUAGE              :  C                                                                    */
 /*  TARGET ENVIRONMENT    :  ANY                                                                  */
-/*  DATE OF FIRST RELEASE :  2014/08/31                                                           */
+/*  DATE OF FIRST RELEASE :  2017/11/03                                                           */
 /*  DESCRIPTION           :  This is a menu program                                               */
 /**************************************************************************************************/
 
@@ -23,9 +23,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "linktable.h"
-
-int Help();
-int Quit();
 
 #define CMD_MAX_LEN 128
 #define DESC_LEN    1024
@@ -42,7 +39,9 @@ typedef struct DataNode
     int     (*handler)();
 } tDataNode;
 
-int SearchCondition(tLinkTableNode * pLinkTableNode, void* args)
+tLinkTable * head = NULL;
+
+static int SearchCondition(tLinkTableNode * pLinkTableNode, void* args)
 {
     tDataNode * pNode = (tDataNode *)pLinkTableNode;
     char* cmd = (char*)args;
@@ -54,13 +53,13 @@ int SearchCondition(tLinkTableNode * pLinkTableNode, void* args)
 }
 
 /* find a cmd in the linklist and return the datanode pointer */
-tDataNode* FindCmd(tLinkTable * head, char * cmd)
+static tDataNode* FindCmd(tLinkTable * head, char * cmd)
 {
     return  (tDataNode*)SearchLinkTableNode(head,SearchCondition,(void*)cmd);
 }
 
 /* show all cmd in listlist */
-int ShowAllCmd(tLinkTable * head)
+static int ShowAllCmd(tLinkTable * head)
 {
     tDataNode * pNode = (tDataNode*)GetLinkTableHead(head);
     while(pNode != NULL)
@@ -71,35 +70,35 @@ int ShowAllCmd(tLinkTable * head)
     return 0;
 }
 
-int InitMenuData(tLinkTable ** ppLinktable)
+static int help()
 {
-    *ppLinktable = CreateLinkTable();
-    tDataNode* pNode = (tDataNode*)malloc(sizeof(tDataNode));
-    pNode->cmd = "help";
-    pNode->desc = "Menu List:";
-    pNode->handler = Help;
-    AddLinkTableNode(*ppLinktable,(tLinkTableNode *)pNode);
+    ShowAllCmd(head);
+    return 0; 
+}
+
+int MenuConfig(char* cmd, char* desc, int (*handler)())
+{
+    pNode = NULL;
+    if(head == NULL)
+    {
+        head = CreateLinkTable();
+        tDataNode* pNode = (tDataNode*)malloc(sizeof(tDataNode));
+        pNode->cmd = "help";
+        pNode->desc = "List all the cmd of menu";
+        pNode->handler = help;
+        AddLinkTableNode(head, (tLinkTableNode *)pNode);
+    }
     pNode = (tDataNode*)malloc(sizeof(tDataNode));
-    pNode->cmd = "version";
-    pNode->desc = "Menu Program V1.0";
-    pNode->handler = NULL; 
-    AddLinkTableNode(*ppLinktable,(tLinkTableNode *)pNode);
-    pNode = (tDataNode*)malloc(sizeof(tDataNode));
-    pNode->cmd = "quit";
-    pNode->desc = "Quit from Menu Program V1.0";
-    pNode->handler = Quit; 
-    AddLinkTableNode(*ppLinktable,(tLinkTableNode *)pNode);
+    pNode->cmd = cmd;
+    pNode->desc = desc;
+    pNode->handler = handler; 
+    AddLinkTableNode(head, (tLinkTableNode *)pNode);
  
     return 0; 
 }
 
-/* menu program */
-
-tLinkTable * head = NULL;
-
-int main()
+int ExecuteMenu()
 {
-    InitMenuData(&head); 
    /* cmd line begins */
     while(1)
     {
@@ -119,15 +118,4 @@ int main()
         }
    
     }
-}
-
-int Help()
-{
-    ShowAllCmd(head);
-    return 0; 
-}
-
-int Quit()
-{
-    exit(0);
 }
