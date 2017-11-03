@@ -74,8 +74,10 @@ int ShowAllCmd(tLinkTable * head)
 
 int help()
 {
-    ShowAllCmd(head);
-    return 0; 
+    printf("**************************help****************************\n");
+    printf("List all the cmd of menu program:\n");
+    showAllCmd(head);
+    printf("**************************end*****************************\n");
 }
 
 int MenuConfig(char* cmd, char* desc, int (*handler)())
@@ -101,22 +103,25 @@ int MenuConfig(char* cmd, char* desc, int (*handler)())
 int ExecuteMenu()
 {
    /* cmd line begins */
+    char input[CMD_MAX_LEN];
+
+    printf("gitDongHub menu [version 3.0]\n");
+    printf("gitDongHub@copyright at 2017/09/24\n");
+    printf("If you need help, please type help\n");
     while(1)
     {
-        char cmd[CMD_MAX_LEN];
-        printf("Input a cmd number > ");
-        scanf("%s", cmd);
-        tDataNode *p = FindCmd(head, cmd);
-        if( p == NULL)
+    	printf("cmd>>");
+    	scanf("%s", input);
+    	tDataNode* p = findCmd(head, input);
+        if(p == NULL)
         {
-            printf("This is a wrong cmd!\n ");
+            printf("the cmd you input isn't exist\n");
             continue;
         }
-        printf("%s - %s\n", p->cmd, p->desc); 
-        if(p->handler != NULL) 
-        { 
+        if(p->handler != NULL)
+        {
             p->handler();
-        }
-   
+        }   
     }
+    return 0;
 }
